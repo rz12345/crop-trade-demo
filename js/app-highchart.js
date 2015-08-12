@@ -57,7 +57,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$q',
 
         /* 取得 Crop 每月價格/交易量數據 */
         $scope.getCropTradePerMonth = function (market_id, crop_id) {
-            var url = '/crop-trade/public/stats/' + market_id + '/' + crop_id;
+            var url = api_host + '/crop-trade/public/stats/' + market_id + '/' + crop_id;
             $http.get(url).success(function (json) {
                 $scope.crop_trade_per_month = json;
 
