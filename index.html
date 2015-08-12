@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app="app" ng-controller="MainCtrl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>農產品價格趨勢</title>
+    <!-- AngularJs lib -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <!-- jQuery lib -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap lib -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- Highchart lib -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <!-- app script -->
+    <script src="js/app-highchart.js"></script>
+    <style>
+        #price {
+            min-width: 310px;
+            height: 500px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>農產品價格趨勢</h1>
+        <!-- Selector -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- 市場 -->
+                <select ng-options="i.code as i.name for i in markets" ng-change="getCropTradePerMonth(market_selected,crop_id_selected)" ng-model="market_selected"></select>
+                <!-- 農產品分類 -->
+                <select ng-options="i.category as i.category for i in crops" ng-change="getCropList(category_selected)" ng-model="category_selected"></select>
+                <!-- 品種 -->
+                <select ng-options="i.name as i.name for i in crops_list" ng-change="getCropIdList(category_selected,crop_selected)" ng-model="crop_selected"></select>
+                <!-- 項目 -->
+                <select ng-options="i.code as i.type+'('+i.code+')' for i in crops_id_list" ng-change="getCropTradePerMonth(market_selected,crop_id_selected)" ng-model="crop_id_selected"></select>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <!-- 每月交易資料少於 12 筆時不 render Chart -->
+            <div class="alert alert-warning" role="alert" ng-show="crop_trade_per_month.length < 12">
+                Warning: 此農產品項目每月交易資料不足 12 筆，請選擇其他項目。
+            </div>
+            <!-- Chart -->
+            <div id="price"></div>
+        </div>
+    </div>
+</body>
+</htmls
