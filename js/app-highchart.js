@@ -6,7 +6,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$q',
         var api_host = 'http://www.zhutian.com.tw',
             markets_ajax = $http.get(api_host + '/crop-trade/json/markets'),
             crops_ajax = $http.get(api_host + '/crop-trade/json/crops');
-
+        
         $q.all([markets_ajax, crops_ajax]).then(function (result) {
             var markets = result[0].data,
                 crops = result[1].data;
@@ -80,6 +80,14 @@ app.controller('MainCtrl', ['$scope', '$http', '$q',
 
                 o_price_chart.trade_date = trade_date;
                 o_price_chart.data = [
+                    {
+                        type: 'line',
+                        name: '交易量',
+                        color: 'rgba(128, 133, 233, 0.30)',
+                        data: amount,
+                        //dashStyle: 'dot',
+                        yAxis: 1
+                    },
                     // 交易量
                     {
                         type: 'column',
@@ -118,13 +126,6 @@ app.controller('MainCtrl', ['$scope', '$http', '$q',
                         //yAxis: 0
                     }
                 ];
-
-                o_amount_chart.trade_date = trade_date;
-                o_amount_chart.data = [{
-                    type: 'column',
-                    name: '交易量',
-                    data: amount
-                }];
 
                 // 農產品項目每月交易資料不足 12 筆的話，就不 render chart
                 if ($scope.crop_trade_per_month.length > 12) {
